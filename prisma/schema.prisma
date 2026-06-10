@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Post {
+  id        String     @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  status    PostStatus @default(IN_PROGRESS)
+}
+
+enum PostStatus {
+  DONE
+  IN_PROGRESS
+}
