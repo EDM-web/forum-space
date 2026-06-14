@@ -105,7 +105,7 @@ const CreatePostForm = () => {
             </Button>
           </div> */}
           <div>
-            <SubmitButton label="Create" />
+            <SubmitButton label="Create" isPending={isPending} />
           </div>
         </FieldGroup>
       </form>
