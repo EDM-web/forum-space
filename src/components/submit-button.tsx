@@ -5,12 +5,13 @@ import { useFormStatus } from "react-dom";
 
 type SubmitButtonProp = {
   label: string;
+  isPending: boolean;
 };
-const SubmitButton = ({ label }: SubmitButtonProp) => {
+const SubmitButton = ({ label, isPending }: SubmitButtonProp) => {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" disabled={pending}>
-      {pending ? <LoaderCircle className="w-4 h-4 animate-spin" /> : label}
+      {isPending ? <LoaderCircle className="w-4 h-4 animate-spin" /> : label}
     </Button>
   );
 };

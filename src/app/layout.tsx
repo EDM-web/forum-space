@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Header from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -50,9 +51,10 @@ export default function RootLayout({
         >
           <main className="flex flex-col mx-auto p-8 lg:p-0 max-w-4xl min-h-full">
             <Header />
-            {children}
+            <TooltipProvider>{children}</TooltipProvider>
+            {/* {children} */}
           </main>
-          <Toaster offset={20} />
+          <Toaster offset={20} richColors />
         </ThemeProvider>
       </body>
     </html>

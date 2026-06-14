@@ -3,8 +3,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { createPost } from "@/features/posts/actions/create-post";
-import CardWrapper from "./card-wrapper";
-import SubmitButton from "./submit-button";
+import CardWrapper from "../../../components/card-wrapper";
+import SubmitButton from "../../../components/submit-button";
 import { useActionState, useEffect } from "react";
 import { useAction } from "next-safe-action/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -99,10 +99,13 @@ const CreatePostForm = () => {
             )}
           />
 
-          <div>
+          {/* <div>
             <Button type="submit" variant={"default"} disabled={isPending}>
               {isPending ? <LoaderCircle className="animate-spin" /> : "Create"}
             </Button>
+          </div> */}
+          <div>
+            <SubmitButton label="Create" />
           </div>
         </FieldGroup>
       </form>

@@ -1,6 +1,6 @@
 "use client";
 
-import { updatePost } from "../actions/update-post";
+// import { updatePost } from "../actions/update-post";
 import CardWrapper from "../../../components/card-wrapper";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -12,123 +12,68 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
-import { postUpdateSchema } from "../schemas";
+// import { postUpdateSchema } from "../schemas";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
-import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
-import { useEffect } from "react";
 import { toast } from "sonner";
 import { Post } from "../../../../generated/prisma/client";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import SubmitButton from "@/components/submit-button";
+import { signUpSchema } from "../schemas";
+import { signUp } from "../actions/signup";
+import { useEffect } from "react";
 type EditPostFormProps = {
   post: Post;
 };
-const EditPostForm = ({ post }: EditPostFormProps) => {
-  const { execute, isPending, hasErrored, hasSucceeded } =
-    useAction(updatePost);
-  const form = useForm<z.infer<typeof postUpdateSchema>>({
-    resolver: zodResolver(postUpdateSchema),
+const SignUpForm = () => {
+  const { execute, isPending, hasErrored, hasSucceeded } = useAction(signUp);
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
-      id: post.id as string,
-      title: post.title,
-      body: post.body,
-      status: post.status,
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof postUpdateSchema>) {
-    execute(values);
-    // const { id, title, body, status } = values;
-    // execute({ id, title, body, status });
+  function onSubmit(values: z.infer<typeof signUpSchema>) {
+    const { name, email, password, confirmPassword } = values;
+    execute({ name, email, password, confirmPassword });
   }
 
   useEffect(() => {
     if (hasSucceeded) {
       form.reset();
-      toast.success("Post Updated successfully");
+      toast.success("Sign up successfully");
     }
     if (hasErrored) {
       toast.error("Something weng wrong");
     }
   }, [hasErrored, hasSucceeded]);
   return (
-    <CardWrapper
-      title="Update this existing post"
-      description="This will be update the existing post"
-    >
+    <CardWrapper title="Sign up" description="Create an new account">
       <form
         id="form-rhf-input"
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8"
       >
         <FieldGroup>
-          {/* id field */}
-          {/* <Controller
-            name="id"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-input-username">Title</FieldLabel>
-
-                <Input
-                  {...field}
-                  id="form-rhf-input-username"
-                  aria-invalid={fieldState.invalid}
-                  placeholder=""
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          /> */}
-
-          {/* title field  */}
+          {/* Name field  */}
           <Controller
-            name="title"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-input-username">Title</FieldLabel>
-
-                <Input
-                  {...field}
-                  id="form-rhf-input-username"
-                  aria-invalid={fieldState.invalid}
-                  placeholder=""
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
-          {/* body field  */}
-          <Controller
-            name="body"
+            name="name"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="form-rhf-input-username">
-                  Description
+                  Full Name
                 </FieldLabel>
-                <Textarea
+
+                <Input
                   {...field}
                   id="form-rhf-input-username"
                   aria-invalid={fieldState.invalid}
-                  placeholder=""
+                  placeholder="John Doe"
                 />
 
                 {fieldState.invalid && (
@@ -138,39 +83,76 @@ const EditPostForm = ({ post }: EditPostFormProps) => {
             )}
           />
 
+          {/* Email field  */}
           <Controller
-            name="status"
+            name="email"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="form-rhf-input-username">Email</FieldLabel>
+                <Input
+                  {...field}
+                  id="form-rhf-input-username"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="example@gmail.com"
+                />
+
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          {/* Password Field  */}
+          <Controller
+            name="password"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldContent>
                   <FieldLabel htmlFor="form-rhf-select-language">
-                    Status
+                    Password
                   </FieldLabel>
                   {/* <FieldDescription>
                     For best results, select the language you speak.
                   </FieldDescription> */}
+                  <Input
+                    {...field}
+                    id="form-rhf-input-username"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="******"
+                    type="password"
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </FieldContent>
-                <Select
-                  name={field.name}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                >
-                  <SelectTrigger
-                    id="form-rhf-select-language"
+              </Field>
+            )}
+          />
+
+          {/* confirmPassword Field  */}
+          <Controller
+            name="confirmPassword"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldContent>
+                  <FieldLabel>Confirm Password</FieldLabel>
+                  {/* <FieldDescription>
+                    For best results, select the language you speak.
+                  </FieldDescription> */}
+                  <Input
+                    {...field}
+                    id="form-rhf-input-username"
                     aria-invalid={fieldState.invalid}
-                    className="w-full"
-                  >
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="DONE">DONE</SelectItem>
-                    <SelectItem value="IN_PROGRESS">IN_PROGRESS</SelectItem>
-                  </SelectContent>
-                </Select>
+                    placeholder="Same as password"
+                    type="password"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </FieldContent>
               </Field>
             )}
           />
@@ -181,7 +163,7 @@ const EditPostForm = ({ post }: EditPostFormProps) => {
             </Button>
           </div> */}
           <div>
-            <SubmitButton label="Update" />
+            <SubmitButton label="Sign up" isPending={isPending} />
           </div>
         </FieldGroup>
       </form>
@@ -189,4 +171,4 @@ const EditPostForm = ({ post }: EditPostFormProps) => {
   );
 };
 
-export default EditPostForm;
+export default SignUpForm;
