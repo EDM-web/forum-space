@@ -181,7 +181,7 @@ const EditPostForm = ({ post }: EditPostFormProps) => {
             </Button>
           </div> */}
           <div>
-            <SubmitButton label="Update" />
+            <SubmitButton label="Update" isPending={isPending} />
           </div>
         </FieldGroup>
       </form>
