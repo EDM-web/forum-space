@@ -22,6 +22,10 @@ import SubmitButton from "@/components/submit-button";
 import { signUpSchema } from "../schemas";
 import { signUp } from "../actions/signup";
 import { useEffect } from "react";
+import Link from "next/link";
+import { signInPath } from "@/path";
+import GithubOauthButton from "./github-oauth-button";
+import { Separator } from "@/components/ui/separator";
 type EditPostFormProps = {
   post: Post;
 };
@@ -42,6 +46,19 @@ const SignUpForm = () => {
     execute({ name, email, password, confirmPassword });
   }
 
+  const Footer = () => {
+    return (
+      <div>
+        <p className="font-medium text-muted-foreground text-sm">
+          Already have an account?{" "}
+          <Link href={signInPath} className="underline">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    );
+  };
+
   useEffect(() => {
     if (hasSucceeded) {
       form.reset();
@@ -52,7 +69,11 @@ const SignUpForm = () => {
     }
   }, [hasErrored, hasSucceeded]);
   return (
-    <CardWrapper title="Sign up" description="Create an new account">
+    <CardWrapper
+      title="Sign up"
+      description="Create a new account"
+      footer={<Footer />}
+    >
       <form
         id="form-rhf-input"
         onSubmit={form.handleSubmit(onSubmit)}
@@ -167,6 +188,12 @@ const SignUpForm = () => {
           </div>
         </FieldGroup>
       </form>
+
+      <div className="py-6">
+        <Separator />
+      </div>
+
+      <GithubOauthButton />
     </CardWrapper>
   );
 };

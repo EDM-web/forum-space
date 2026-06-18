@@ -5,7 +5,7 @@ const PostList = async () => {
   return (
     <div className="space-y-6 my-6">
       {posts.map((post) => (
-        <PostItem {...post} key={post.id} />
+        <PostItem {...post} key={post.id} user={post.user} />
       ))}
     </div>
   );

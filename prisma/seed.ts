@@ -8,18 +8,22 @@ export const prisma = new PrismaClient({ adapter });
 
 export const fake_posts = [
   {
+    userId: "R0AHbBH068QWR35Cou0nMUeCWBjFRaHd",
     title: "First Post",
     body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit, facere earum, assumenda accusamus et a quo dolor vero error vel qui, quod distinctio nostrum sapiente dolorem eveniet quaerat fugiat! Esse!",
   },
   {
+    userId: "R0AHbBH068QWR35Cou0nMUeCWBjFRaHd",
     title: "Second Post",
     body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit, facere earum, assumenda accusamus et a quo dolor vero error vel qui, quod distinctio nostrum sapiente dolorem eveniet quaerat fugiat! Esse!",
   },
   {
+    userId: "R0AHbBH068QWR35Cou0nMUeCWBjFRaHd",
     title: "Third Post",
     body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit, facere earum, assumenda accusamus et a quo dolor vero error vel qui, quod distinctio nostrum sapiente dolorem eveniet quaerat fugiat! Esse!",
   },
   {
+    userId: "R0AHbBH068QWR35Cou0nMUeCWBjFRaHd",
     title: "Fourth Post",
     body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit, facere earum, assumenda accusamus et a quo dolor vero error vel qui, quod distinctio nostrum sapiente dolorem eveniet quaerat fugiat! Esse!",
   },

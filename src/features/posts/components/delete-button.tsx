@@ -25,7 +25,7 @@ const DeleteButton = ({ id }: DeleteButtonProps) => {
   return (
     <CardFooter>
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <Button variant={"destructive"} size={"sm"}>
             Delete
           </Button>
@@ -39,7 +39,7 @@ const DeleteButton = ({ id }: DeleteButtonProps) => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             <Button

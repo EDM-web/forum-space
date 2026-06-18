@@ -1,7 +1,7 @@
 "use server";
 
 import { actionClient } from "@/lib/safe-action";
-import { singInPath } from "@/path";
+import { signInPath } from "@/path";
 import { signUpSchema } from "../schemas";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -24,7 +24,7 @@ export const signUp = actionClient
       // return { message: "Something went wrong.", payload: formData };
     }
 
-    redirect(singInPath);
+    redirect(signInPath);
   });
 
 // _actionState: { message: string; payload?: FormData },

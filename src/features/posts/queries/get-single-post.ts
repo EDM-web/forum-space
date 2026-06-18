@@ -1,10 +1,13 @@
 import { prisma } from "@/lib/prisma";
-import { Post } from "../../../../generated/prisma/client";
+import { Post, User } from "../../../../generated/prisma/client";
 
-export const getSinglePost = async (id: string): Promise<Post | null> => {
+export const getSinglePost = async (id: string) => {
   return await prisma.post.findUnique({
     where: {
       id,
+    },
+    include: {
+      user: true,
     },
   });
 };

@@ -1,4 +1,4 @@
-import { homePath, postsPath, signUpPath, singInPath } from "@/path";
+import { homePath, postsPath, signUpPath, signInPath } from "@/path";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./darkmode-toggler";
@@ -38,7 +38,7 @@ export const SignUpAndSignInButtons = () => {
         <Link href={signUpPath}>Sign up</Link>
       </Button>
       <Button variant={"outline"}>
-        <Link href={singInPath}>Sign in</Link>
+        <Link href={signInPath}>Sign in</Link>
       </Button>
     </div>
   );

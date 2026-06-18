@@ -2,7 +2,6 @@
 
 // import { updatePost } from "../actions/update-post";
 import CardWrapper from "../../../components/card-wrapper";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import {
   Field,
@@ -22,11 +21,15 @@ import SubmitButton from "@/components/submit-button";
 import { signInSchema } from "../schemas";
 import { useEffect } from "react";
 import { signIn } from "../actions/signin";
+import { resetPasswordPath, signUpPath } from "@/path";
+import Link from "next/link";
+import GithubOauthButton from "./github-oauth-button";
+import { Separator } from "@/components/ui/separator";
 type EditPostFormProps = {
   post: Post;
 };
 const SignInForm = () => {
-  const { execute, isPending } = useAction(signIn);
+  const { execute, isPending, hasErrored, hasSucceeded } = useAction(signIn);
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -40,17 +43,38 @@ const SignInForm = () => {
     execute({ email, password });
   }
 
-  //   useEffect(() => {
-  //     if (hasSucceeded) {
-  //       form.reset();
-  //       toast.success("Sign in successfully");
-  //     }
-  //     if (hasErrored) {
-  //       toast.error("Something weng wrong");
-  //     }
-  //   }, [hasErrored, hasSucceeded]);
+  useEffect(() => {
+    if (hasSucceeded) {
+      form.reset();
+      toast.success("Sign in successfully");
+    }
+    if (hasErrored) {
+      toast.error("Something weng wrong");
+    }
+  }, [hasErrored, hasSucceeded]);
+
+  const Footer = () => {
+    return (
+      <div className="flex justify-between w-full font-medium text-muted-foreground text-sm">
+        <p>
+          Don't have an account?{" "}
+          <Link href={signUpPath} className="underline">
+            Sign up
+          </Link>
+        </p>
+
+        <Link href={resetPasswordPath} className="underline">
+          forgot passowrd?
+        </Link>
+      </div>
+    );
+  };
   return (
-    <CardWrapper title="Sign in" description="Create an new account">
+    <CardWrapper
+      title="Sign in"
+      description="Sign in your existing account"
+      footer={<Footer />}
+    >
       <form
         id="form-rhf-input"
         onSubmit={form.handleSubmit(onSubmit)}
@@ -110,6 +134,12 @@ const SignInForm = () => {
           </div>
         </FieldGroup>
       </form>
+
+      <div className="py-6">
+        <Separator />
+      </div>
+
+      <GithubOauthButton />
     </CardWrapper>
   );
 };

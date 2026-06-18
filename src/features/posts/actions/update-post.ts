@@ -2,14 +2,20 @@
 
 import { prisma } from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { postsPath } from "@/path";
+import { postsPath, singInPath } from "@/path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { postUpdateSchema } from "../schemas";
+import { getSession } from "@/lib/getSession";
 
 export const updatePost = actionClient
   .inputSchema(postUpdateSchema)
   .action(async ({ parsedInput }) => {
+    const session = await getSession();
+
+    if (!session) {
+      redirect(singInPath);
+    }
     await prisma.post.update({
       where: {
         id: parsedInput.id,
