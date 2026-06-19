@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { postsPath, singInPath } from "@/path";
+import { postsPath, signInPath } from "@/path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { postUpdateSchema } from "../schemas";
@@ -14,7 +14,7 @@ export const updatePost = actionClient
     const session = await getSession();
 
     if (!session) {
-      redirect(singInPath);
+      redirect(signInPath);
     }
     await prisma.post.update({
       where: {
