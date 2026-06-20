@@ -5,15 +5,18 @@ import { ModeToggle } from "./darkmode-toggler";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { signOut } from "@/features/auth/actions/signout";
+import Image from "next/image";
+import Logo from "../../public/fourm_logo_dark-remove.png";
 
 const Header = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
   return (
-    <div className="flex justify-between items-center mt-2 mb-4">
+    <div className="top-0 sticky flex justify-between items-center mt-2 mb-4">
       <Link href={homePath} className="font-extrabold text-2xl">
-        Dev.io{" "}
+        {/* <Image src={Logo} alt="Forum Logo" /> */}
+        Forum Space
       </Link>
       <div className="flex items-center gap-2">
         {/* <Button variant={'link'}><Link href={HOME}>Home</Link></Button> */}

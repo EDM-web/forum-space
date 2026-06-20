@@ -16,8 +16,6 @@ import { postUpdateSchema } from "../schemas";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
-import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { Post } from "../../../../generated/prisma/client";

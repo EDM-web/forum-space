@@ -1,6 +1,6 @@
 import SignUpForm from "@/features/auth/components/signup-form";
 
-const SignUpPage = () => {
+const SignUpPage = async () => {
   return <SignUpForm />;
 };
 

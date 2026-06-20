@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import DeleteButton from "./delete-button";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { isOwner } from "@/lib/is-owner";
 
 interface Props extends Post {
   isCard?: boolean;
@@ -57,14 +58,14 @@ const PostItem = async ({
             <Link href={singlePostPath(id)}>View</Link> <ArrowRight />
           </Button>
 
-          {user.id === session?.user.id && (
+          {(await isOwner(user.id)) && ( //in this line await must have
             <Button variant="secondary">
               <Link href={editPostPath(id)}>Edit</Link> <Edit />
             </Button>
           )}
         </CardContent>
       )}
-      {!isCard && <DeleteButton id={id} />}
+      {!isCard && (await isOwner(user.id)) && <DeleteButton id={id} />}
     </Card>
   );
 };
