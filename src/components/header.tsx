@@ -18,9 +18,7 @@ const Header = async () => {
       </Link>
       <div className="flex items-center gap-2">
         {/* <Button variant={'link'}><Link href={HOME}>Home</Link></Button> */}
-        <Button variant={"link"}>
-          <Link href={postsPath}>Posts</Link>
-        </Button>
+
         {session ? <SignOutButton /> : <SignUpAndSignInButtons />}
         {/* <Button variant={"link"}>
           <Link href={aboutPath}>About</Link>
@@ -47,11 +45,16 @@ export const SignUpAndSignInButtons = () => {
 
 export const SignOutButton = () => {
   return (
-    <form action={signOut}>
-      <Button variant={"destructive"} type="submit">
-        Sign out
+    <>
+      <Button variant={"link"}>
+        <Link href={postsPath}>My Posts</Link>
       </Button>
-    </form>
+      <form action={signOut}>
+        <Button variant={"destructive"} type="submit">
+          Sign out
+        </Button>
+      </form>
+    </>
   );
 };
 

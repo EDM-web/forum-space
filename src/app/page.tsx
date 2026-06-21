@@ -1,17 +1,15 @@
 import Heading from "@/components/heading";
-import Link from "next/link";
+import PostList from "@/features/posts/components/post-list";
+import { Suspense } from "react";
+import Loading from "./posts/[id]/loading";
 
 export default function Home() {
   return (
-    <div>
-      <Heading title="Home" />
-      {/* <Button size={'lg'} variant={'outline'}>
-      <Link
-        href={POSTS}
-      >
-        All posts
-      </Link>
-      </Button> */}
-    </div>
+    <main>
+      <Heading title="All Posts" description="View all forum posts" />
+      <Suspense fallback={<Loading />}>
+        <PostList userId={undefined} />
+      </Suspense>
+    </main>
   );
 }

@@ -34,9 +34,9 @@ const PostItem = async ({
   // const deleteHandler = async () => {
   //   await deletePost(id as string);
   // };
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  // const session = await auth.api.getSession({
+  //   headers: await headers(),
+  // });
   return (
     <Card className="relative">
       <CardHeader>
