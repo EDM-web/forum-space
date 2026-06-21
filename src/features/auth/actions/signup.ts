@@ -1,10 +1,8 @@
 "use server";
 
 import { actionClient } from "@/lib/safe-action";
-import { signInPath } from "@/path";
 import { signUpSchema } from "../schemas";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 
 export const signUp = actionClient
   .inputSchema(signUpSchema)
@@ -18,14 +16,16 @@ export const signUp = actionClient
           password: input.password,
         },
       });
-    } catch (error) {
-      // console.log(error);
-      throw new Error("Sign up : Something went wrong");
-      // return { message: "Something went wrong.", payload: formData };
+
+      return { success: true, error: null };
+    } catch (error: any) {
+      console.log(error);
+      const errorMessage =
+        error.message || error.body.message || "Someting went wrong";
+
+      return {
+        success: false,
+        error: errorMessage,
+      };
     }
-
-    redirect(signInPath);
   });
-
-// _actionState: { message: string; payload?: FormData },
-// formData: FormData

@@ -4,7 +4,6 @@ import { actionClient } from "@/lib/safe-action";
 import { postsPath } from "@/path";
 import { signInSchema } from "../schemas";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 
 export const signIn = actionClient
   .inputSchema(signInSchema)
@@ -17,10 +16,18 @@ export const signIn = actionClient
           password: input.password,
         },
       });
-    } catch (error) {
-      // console.log(error);
-      throw new Error("Sign up : Something went wrong");
-    }
 
-    redirect(postsPath);
+      return {
+        success: true,
+        error: null,
+      };
+    } catch (error: any) {
+      console.log(error);
+      const errorMessage =
+        error.message || error.body.message || "Something went wrong";
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    }
   });

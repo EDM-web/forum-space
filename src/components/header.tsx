@@ -5,8 +5,6 @@ import { ModeToggle } from "./darkmode-toggler";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { signOut } from "@/features/auth/actions/signout";
-import Image from "next/image";
-import Logo from "../../public/fourm_logo_dark-remove.png";
 
 const Header = async () => {
   const session = await auth.api.getSession({

@@ -26,11 +26,12 @@ import Link from "next/link";
 import { signInPath } from "@/path";
 import GithubOauthButton from "./github-oauth-button";
 import { Separator } from "@/components/ui/separator";
+import { redirect } from "next/navigation";
 type EditPostFormProps = {
   post: Post;
 };
 const SignUpForm = () => {
-  const { execute, isPending, hasErrored, hasSucceeded } = useAction(signUp);
+  const { execute, isPending, result } = useAction(signUp);
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -60,14 +61,19 @@ const SignUpForm = () => {
   };
 
   useEffect(() => {
-    if (hasSucceeded) {
-      form.reset();
+    const data = result.data;
+
+    if (!data) {
+      return;
+    }
+
+    if (data?.success) {
       toast.success("Sign up successfully");
+      redirect(signInPath);
+    } else if (data?.error) {
+      toast.error(data.error);
     }
-    if (hasErrored) {
-      toast.error("Something weng wrong");
-    }
-  }, [hasErrored, hasSucceeded]);
+  }, [result]);
   return (
     <CardWrapper
       title="Sign up"

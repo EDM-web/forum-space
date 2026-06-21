@@ -21,15 +21,19 @@ import SubmitButton from "@/components/submit-button";
 import { signInSchema } from "../schemas";
 import { useEffect } from "react";
 import { signIn } from "../actions/signin";
-import { resetPasswordPath, signUpPath } from "@/path";
+import { homePath, resetPasswordPath, signUpPath } from "@/path";
 import Link from "next/link";
 import GithubOauthButton from "./github-oauth-button";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
+
 type EditPostFormProps = {
   post: Post;
 };
 const SignInForm = () => {
-  const { execute, isPending, hasErrored, hasSucceeded } = useAction(signIn);
+  const { execute, isPending, result } = useAction(signIn);
+
+  const router = useRouter();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -44,14 +48,16 @@ const SignInForm = () => {
   }
 
   useEffect(() => {
-    if (hasSucceeded) {
-      form.reset();
+    const data = result.data;
+
+    if (data?.success) {
       toast.success("Sign in successfully");
+      router.push(homePath); //Same as redirect but we should use 'redirect' in server components.
+      router.refresh();
+    } else if (data?.error) {
+      toast.error(data.error);
     }
-    if (hasErrored) {
-      toast.error("Something weng wrong");
-    }
-  }, [hasErrored, hasSucceeded]);
+  }, [result]);
 
   const Footer = () => {
     return (
