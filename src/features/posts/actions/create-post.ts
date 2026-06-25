@@ -29,6 +29,7 @@ export const createPost = actionClient
       revalidatePath(postsPath);
       return { message: "post created" };
     } catch (error) {
+      console.log(error);
       throw new Error("create post : Something went wrong");
       // return { message: "Something went wrong.", payload: formData };
     }

@@ -50,7 +50,11 @@ export const SignOutButton = () => {
         <Link href={postsPath}>My Posts</Link>
       </Button>
       <form action={signOut}>
-        <Button variant={"destructive"} type="submit">
+        <Button
+          variant={"destructive"}
+          type="submit"
+          className="cursor-pointer"
+        >
           Sign out
         </Button>
       </form>
