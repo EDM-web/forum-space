@@ -49,7 +49,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex flex-col mx-auto p-6 lg:p-0 max-w-4xl min-h-full">
+          <main className="flex flex-col mx-auto p-4 lg:p-0 max-w-4xl min-h-full">
             <Header />
             <TooltipProvider>{children}</TooltipProvider>
             {/* {children} */}
