@@ -14,8 +14,6 @@ import { cn } from "@/lib/utils";
 import { Post, User } from "../../../../generated/prisma/client";
 import { Badge } from "@/components/ui/badge";
 import DeleteButton from "./delete-button";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { isOwner } from "@/lib/is-owner";
 
 interface Props extends Post {
